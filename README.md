@@ -22,4 +22,8 @@ op Rob123
 
 ## Building
 
-To build the image, run
+To build the image, run:
+
+```bash
+docker build -t magikcraft/scriptcraft .
+```
