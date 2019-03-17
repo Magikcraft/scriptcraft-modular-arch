@@ -5,7 +5,7 @@ Docker image with Spigot 1.13 and Scriptcraft installed.
 ## Run
 
 ```bash
-docker run -it -p 25665:25565 magikcraft/scriptcraft
+docker run -it -p 25665:25565 --mount source=scriptcraft-worlds,target=/server/worlds --mount source=scriptcraft-cache,target=/server/cache magikcraft/scriptcraft
 ```
 
 When the server starts, you need to give yourself `op`. At the server console, type this:
