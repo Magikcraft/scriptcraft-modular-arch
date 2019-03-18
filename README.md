@@ -62,9 +62,9 @@ We developed the Scriptcraft Modular Architecture to allow us to easily integrat
 
 3. The bootstrap:
 
-4. Replaces the standard scriptcraft implementation of `require` at run-time. This custom require adds the `scriptcraft-plugins` to the require resolution search paths.
+* Replaces the standard scriptcraft implementation of `require` at run-time. This custom require adds the `scriptcraft-plugins` to the require resolution search paths.
 
-5. Scans the subdirectories' `plugin` folder and loads everything in them.
+* Scans the subdirectories' `plugin` folder and loads everything in them.
 
 ## Module Resolution
 
