@@ -50,11 +50,13 @@ We developed the Scriptcraft Modular Architecture to allow us to easily integrat
 
 1. We put a directory outside scriptcraft and load additional modules in there. So the directory structure looks like this:
 
+```
    minecraft
        - scriptcraft-plugins
            - magikcraft
            - mct1
        - scriptcraft
+```
 
 2. We mount a custom bootstrap into `scriptcraft/plugins` via docker. This bootstrap is loaded by Scriptcraft's standard plugin loading.
 
