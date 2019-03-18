@@ -10,6 +10,7 @@ RUN unzip ScriptCraft-3.4.0.zip
 RUN mv ScriptCraft-3.4.0/src/main/js/ scriptcraft/ && \
     rm -rf ScriptCraft* && \
     mkdir plugins && \
-    mv ./scriptcraft.jar plugins/scriptcraft.jar
+    mv ./scriptcraft.jar plugins/scriptcraft.jar && \
+    mv sma-bootstrap scriptcraft/plugins/
 
 ENTRYPOINT /server/entrypoint.sh

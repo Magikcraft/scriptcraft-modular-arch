@@ -1,11 +1,11 @@
 # docker-scriptcraft
 
-Docker image with Spigot 1.13 and Scriptcraft installed.
+Docker image with Spigot 1.13, Scriptcraft, and Scriptcraft Modular Architecture installed.
 
 ## Run
 
 ```bash
-docker run -it -p 25665:25565 --mount source=scriptcraft-worlds,target=/server/worlds --mount source=scriptcraft-cache,target=/server/cache magikcraft/scriptcraft
+docker run -it -p 25665:25565 magikcraft/scriptcraft
 ```
 
 When the server starts, you need to give yourself `op`. At the server console, type this:
@@ -27,3 +27,7 @@ To build the image, run:
 ```bash
 docker build -t magikcraft/scriptcraft .
 ```
+
+## Scriptcraft Modular Architecture
+
+For information on the Scriptcraft Modular Architecture, see the `README-SMA.md` file.
