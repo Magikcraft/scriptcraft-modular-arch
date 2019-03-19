@@ -1,4 +1,8 @@
 "use strict";
+/*
+This file is modified MIT-licensed code from Scriptcraft
+See license-scriptcraft.txt
+*/
 Object.defineProperty(exports, "__esModule", { value: true });
 var smaDirectory = '../scriptcraft-plugins'; // relative to scriptcraft dir
 var log = function (msg) { return console.log("[sma-patch-require] " + msg); };

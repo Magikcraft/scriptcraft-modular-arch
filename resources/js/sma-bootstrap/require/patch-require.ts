@@ -1,3 +1,8 @@
+/*
+This file is modified MIT-licensed code from Scriptcraft
+See license-scriptcraft.txt
+*/
+
 const smaDirectory = '../scriptcraft-plugins'; // relative to scriptcraft dir
 
 const log = msg => console.log(`[sma-patch-require] ${msg}`);
