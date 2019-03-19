@@ -78,7 +78,7 @@ export function patch() {
     const modulePaths = [
         `${jsPluginsRootDirName}/modules/`,
         `${jsPluginsRootDirName}/lib/`,
-        `${jsPluginsRootDir}/${smaDirectory}/`
+        `${jsPluginsRootDirName}/${smaDirectory}/`
     ]
 
     if (config.verbose) {

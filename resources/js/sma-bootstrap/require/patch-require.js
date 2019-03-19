@@ -69,7 +69,7 @@ function patch() {
     var modulePaths = [
         jsPluginsRootDirName + "/modules/",
         jsPluginsRootDirName + "/lib/",
-        jsPluginsRootDir + "/" + smaDirectory + "/"
+        jsPluginsRootDirName + "/" + smaDirectory + "/"
     ];
     if (config.verbose) {
         log('Setting up CommonJS-style module system. Root Directory: ' +

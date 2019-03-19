@@ -16,12 +16,21 @@ log('============================');
  */
 require('./polyfills').sync(); // tslint:disable-line
 
-log('Loading SMA plugins...');
+/**
+ * Replace the global require with our custom implementation.
+ *
+ * The custom require:
+ * 0. Adds the `scriptcraft-plugins` directory to the search path.
+ */
+; (require as any) = require('./require/patch-require').patch();
 
 /**
- * SMA loader is alphabetically sorted
+ * SMA loader is alphabetically sorted. We use a path relative to the root,
+ * because we lost our context when we patched require.
  */
-const loader = require('./lib/loader');
+const loader = require(`./plugins/sma-bootstrap/lib/loader`);
+
+log('Loading SMA plugins...');
 
 const canonize = (file) => '' + file.getCanonicalPath().replaceAll('\\\\', '/');
 
@@ -31,33 +40,28 @@ const smaPluginsRootDirName = canonize(smaPluginsRootDir);
 log(`Searching for SMA plugins in ${smaPluginsRootDir}...`);
 
 const smaPlugins = smaPluginsRootDir.list(function (file) { return file.getName().indexOf('.') != 0 });
-const len = smaPlugins.length;
-const pluginDirs: string[] = [];
-for (let i = 0; i < len; i++) {
-    const file = new File(`${smaPluginsRootDirName}/${smaPlugins[i]}/plugins`);
-    if (file.isDirectory()) {
+if (!smaPlugins) {
+    log('No plugins found.')
+} else {
+    const len = smaPlugins.length;
+    const pluginDirs: string[] = [];
+    for (let i = 0; i < len; i++) {
         log(`Found ${smaPlugins[i]}`)
-        pluginDirs.push(('' + file.canonicalPath).replace(/\\\\/g, '/'));
+        const file = new File(`${smaPluginsRootDirName}/${smaPlugins[i]}/plugins`);
+        if (file.isDirectory()) {
+            pluginDirs.push(('' + file.canonicalPath).replace(/\\\\/g, '/'));
+        }
     }
+
+    pluginDirs.map(d => {
+        try {
+            log(`Loading ${d}...`);
+            loader.autoloadAlphabetically(global, d);
+            log(`Loaded ${d}.`)
+        } catch (e) {
+            log(`Error encountered while loading ${d}`);
+            log(e);
+        }
+    });
 }
-
-pluginDirs.map(d => {
-    try {
-        log(`Loading ${d}...`);
-        loader.autoloadAlphabetically(global, d);
-        log(`Loaded ${d}.`)
-    } catch (e) {
-        log(`Error encountered while loading ${d}`);
-        log(e);
-    }
-});
-
 log('SMA plugin loading complete.');
-
-/**
- * Replace the global require with our custom implementation.
- *
- * The custom require:
- * 0. Adds the `scriptcraft-plugins` directory to the search path.
- */
-; (require as any) = require('./require/patch-require').patch();

@@ -1,11 +1,12 @@
-// DO NOT CONVERT TO TYPESCRIPT
-
-// THIS FILE MUST BE JAVASCRIPT
-
 /*
 This file is modified MIT-licensed code from Scriptcraft
 See license-scriptcraft.txt
 */
+
+// DO NOT CONVERT TO TYPESCRIPT
+
+// THIS FILE MUST BE JAVASCRIPT
+
 
 // Not Loaded in Scriptcraft, only in SMA
 /*************************************************************************
@@ -133,18 +134,6 @@ See license-scriptcraft.txt
             head = '(function(exports,module,require,__filename,__dirname){ ',
             code = '',
             line = null;
-
-        /*
-        HIJACK!
-        */
-
-        // if (path.indexOf('magikcraft/') === 0) {
-        //   path = path.replace('magikcraft/', '');
-        // }
-
-        /*
-        END:HIJACK!
-        */
 
         if (typeof options == 'undefined') {
             options = { cache: true };

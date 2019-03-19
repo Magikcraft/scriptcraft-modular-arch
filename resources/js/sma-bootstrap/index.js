@@ -14,37 +14,6 @@ log('============================');
  * Load ES6 polyfills globally.
  */
 require('./polyfills').sync(); // tslint:disable-line
-log('Loading SMA plugins...');
-/**
- * SMA loader is alphabetically sorted
- */
-var loader = require('./lib/loader');
-var canonize = function (file) { return '' + file.getCanonicalPath().replaceAll('\\\\', '/'); };
-var smaPluginsRootDir = new File(smaPath);
-var smaPluginsRootDirName = canonize(smaPluginsRootDir);
-log("Searching for SMA plugins in " + smaPluginsRootDir + "...");
-var smaPlugins = smaPluginsRootDir.list(function (file) { return file.getName().indexOf('.') != 0; });
-var len = smaPlugins.length;
-var pluginDirs = [];
-for (var i = 0; i < len; i++) {
-    var file = new File(smaPluginsRootDirName + "/" + smaPlugins[i] + "/plugins");
-    if (file.isDirectory()) {
-        log("Found " + smaPlugins[i]);
-        pluginDirs.push(('' + file.canonicalPath).replace(/\\\\/g, '/'));
-    }
-}
-pluginDirs.map(function (d) {
-    try {
-        log("Loading " + d + "...");
-        loader.autoloadAlphabetically(global, d);
-        log("Loaded " + d + ".");
-    }
-    catch (e) {
-        log("Error encountered while loading " + d);
-        log(e);
-    }
-});
-log('SMA plugin loading complete.');
 /**
  * Replace the global require with our custom implementation.
  *
@@ -53,3 +22,40 @@ log('SMA plugin loading complete.');
  */
 ;
 require = require('./require/patch-require').patch();
+/**
+ * SMA loader is alphabetically sorted. We use a path relative to the root,
+ * because we lost our context when we patched require.
+ */
+var loader = require("./plugins/sma-bootstrap/lib/loader");
+log('Loading SMA plugins...');
+var canonize = function (file) { return '' + file.getCanonicalPath().replaceAll('\\\\', '/'); };
+var smaPluginsRootDir = new File(smaPath);
+var smaPluginsRootDirName = canonize(smaPluginsRootDir);
+log("Searching for SMA plugins in " + smaPluginsRootDir + "...");
+var smaPlugins = smaPluginsRootDir.list(function (file) { return file.getName().indexOf('.') != 0; });
+if (!smaPlugins) {
+    log('No plugins found.');
+}
+else {
+    var len = smaPlugins.length;
+    var pluginDirs = [];
+    for (var i = 0; i < len; i++) {
+        log("Found " + smaPlugins[i]);
+        var file = new File(smaPluginsRootDirName + "/" + smaPlugins[i] + "/plugins");
+        if (file.isDirectory()) {
+            pluginDirs.push(('' + file.canonicalPath).replace(/\\\\/g, '/'));
+        }
+    }
+    pluginDirs.map(function (d) {
+        try {
+            log("Loading " + d + "...");
+            loader.autoloadAlphabetically(global, d);
+            log("Loaded " + d + ".");
+        }
+        catch (e) {
+            log("Error encountered while loading " + d);
+            log(e);
+        }
+    });
+}
+log('SMA plugin loading complete.');

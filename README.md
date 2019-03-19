@@ -12,6 +12,10 @@ It also means that you can update the Scriptcraft version without impacting your
 docker run -it -p 25665:25565 magikcraft/scriptcraft
 ```
 
+For an example on starting the docker container with SMA plugins, refer to the example in the `test` directory.
+
+## Note on getting op
+
 When the server starts, you need to give yourself `op`. At the server console, type this:
 
 ```
