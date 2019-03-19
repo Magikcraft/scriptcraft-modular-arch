@@ -7,12 +7,6 @@ See license-scriptcraft.txt
 
 // THIS FILE MUST BE JAVASCRIPT
 
-
-// Not Loaded in Scriptcraft, only in SMA
-/*************************************************************************
-## require - Hijack require in Scriptcraft to modify loaded code.
-
-***/
 (function (rootDir, modulePaths, hooks, evaluate) {
 
     // make the old require available as __require

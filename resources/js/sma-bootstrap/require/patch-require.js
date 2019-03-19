@@ -8,8 +8,7 @@ var smaDirectory = '../scriptcraft-plugins'; // relative to scriptcraft dir
 var log = function (msg) { return console.log("[sma-patch-require] " + msg); };
 function patch() {
     /*
-        We're going to replace the global require function. This allows us to modify code
-        as it is loaded.
+        We're going to replace the global require function. This allows us to modify the search path for module resolution
 
         This file preps and loads it, replacing the existing global.require, and renaming
         it to __require.

@@ -23,7 +23,7 @@ require('./polyfills').sync(); // tslint:disable-line
 ;
 require = require('./require/patch-require').patch();
 /**
- * SMA loader is alphabetically sorted. We use a path relative to the root,
+ * We use a path relative to the root,
  * because we lost our context when we patched require.
  */
 var loader = require("./plugins/sma-bootstrap/lib/loader");
@@ -46,6 +46,7 @@ else {
             pluginDirs.push(('' + file.canonicalPath).replace(/\\\\/g, '/'));
         }
     }
+    // Map, rather than forEach, for synchronisation
     pluginDirs.map(function (d) {
         try {
             log("Loading " + d + "...");
