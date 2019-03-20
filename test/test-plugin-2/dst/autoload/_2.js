@@ -1,0 +1,1 @@
+console.log('Autoloaded from package.json: test-plugin-2/dst/autoload/_2.js');

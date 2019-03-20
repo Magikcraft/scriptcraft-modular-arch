@@ -68,7 +68,9 @@ We developed the Scriptcraft Modular Architecture to allow us to easily integrat
 
 * Replaces the standard scriptcraft implementation of `require` at run-time. This custom require adds the `scriptcraft-plugins` to the require resolution search paths.
 
-* Scans the subdirectories' `plugin` folder and loads everything in them.
+* Scans each SMA plugin for a `package.json` file. If found, checks for a `scriptcraft_load_dir` key. If present, the contents of the directory specified in this key are autoloaded.
+
+* If no `package.json` is found in an SMA plugin, or if it does not specify a `scriptcraft_load_dir`, then the bootstrap looks for a `plugin` folder in the SMA plugin, and loads everything in there if it is present.
 
 ## Module Resolution
 

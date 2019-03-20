@@ -46,11 +46,27 @@ if (!smaPlugins) {
     const len = smaPlugins.length;
     const pluginDirs: string[] = [];
     for (let i = 0; i < len; i++) {
-        log(`Found ${smaPlugins[i]}`)
-        const file = new File(`${smaPluginsRootDirName}/${smaPlugins[i]}/plugins`);
-        if (file.isDirectory()) {
-            pluginDirs.push(('' + file.canonicalPath).replace(/\\\\/g, '/'));
+        log(`Found SMA Plugin: ${smaPlugins[i]}`)
+        try {
+            const pkgJson = require(`${smaPluginsRootDirName}/${smaPlugins[i]}/package.json`);
+            console.log(`Found ${smaPlugins[i]}/package.json`)
+            if (pkgJson.scriptcraft_load_dir) {
+                console.log(`Scanning ${smaPlugins[i]}/${pkgJson.scriptcraft_load_dir}`)
+                const file = new File(`${smaPluginsRootDirName}/${smaPlugins[i]}/${pkgJson.scriptcraft_load_dir}`);
+                if (file.isDirectory()) {
+                    console.log(`Found autoload directory ${smaPlugins[i]}/${pkgJson.scriptcraft_load_dir}`)
+                    pluginDirs.push(('' + file.canonicalPath).replace(/\\\\/g, '/'));
+                }
+                pluginDirs.push();
+            }
+        } catch (e) {
+            const file = new File(`${smaPluginsRootDirName}/${smaPlugins[i]}/plugins`);
+            if (file.isDirectory()) {
+                console.log(`Found autoload directory ${smaPlugins[i]}/plugins`);
+                pluginDirs.push(('' + file.canonicalPath).replace(/\\\\/g, '/'));
+            }
         }
+
     }
 
     // Map, rather than forEach, for synchronisation
