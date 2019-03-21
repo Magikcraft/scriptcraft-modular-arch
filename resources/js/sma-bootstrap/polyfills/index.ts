@@ -26,14 +26,14 @@ log('= Loading ES6 Polyfills...')
 global.EventEmitter = require('./event-emitter')
 
 const _sync = [
-	global.EventEmitter,
-	require('./array-from'),
-	require('./object-assign'),
-	require('./promise'),
-	require('./string'),
-	require('./array-filter'),
-	require('./array-find'),
-	require('./array-includes')
+    global.EventEmitter,
+    require('./array-from'),
+    require('./object-assign'),
+    require('./promise'),
+    require('./string'),
+    require('./array-filter'),
+    require('./array-find'),
+    require('./array-includes')
 ]
 
 log('============================')
