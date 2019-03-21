@@ -5,7 +5,7 @@ See license-scriptcraft.txt
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 var smaDirectory = '../scriptcraft-plugins'; // relative to scriptcraft dir
-var log = function (msg) { return console.log("[sma-patch-require] " + msg); };
+var log = function (msg) { return console.log("[SMA] " + msg); };
 function patch() {
     /*
         We're going to replace the global require function. This allows us to modify the search path for module resolution

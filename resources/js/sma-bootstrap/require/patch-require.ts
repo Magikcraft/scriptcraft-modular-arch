@@ -5,7 +5,7 @@ See license-scriptcraft.txt
 
 const smaDirectory = '../scriptcraft-plugins'; // relative to scriptcraft dir
 
-const log = msg => console.log(`[sma-patch-require] ${msg}`);
+const log = msg => console.log(`[SMA] ${msg}`);
 
 export function patch() {
     /*
