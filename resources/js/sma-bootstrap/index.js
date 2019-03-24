@@ -13,13 +13,7 @@ log('============================');
 /**
  * Load ES6 polyfills globally.
  */
-require('./polyfills').sync(); // tslint:disable-line
-/**
- * Replace the global require with our custom implementation.
- *
- * The custom require:
- * 0. Adds the `scriptcraft-plugins` directory to the search path.
- */
+require('./polyfills').sync() // tslint:disable-line
 ;
 require = require('./require/patch-require').patch();
 /**
@@ -65,12 +59,14 @@ function getPackages(smaPlugins) {
         log("Found plugin: " + name);
         packages.push({
             name: name,
-            path: absolutePluginPath("" + name)
+            path: absolutePluginPath("" + name),
         });
     }
     var len = smaPlugins.length;
     for (var i = 0; i < len; i++) {
-        var name = void 0;
+        var name 
+        // Check for package namespaces like @magikcraft or @scriptcraft
+        = void 0;
         // Check for package namespaces like @magikcraft or @scriptcraft
         var isNamespacedPackageDir = smaPlugins[i].indexOf('@') === 0;
         if (isNamespacedPackageDir) {
@@ -95,7 +91,9 @@ function getLoadDirectoryFromPackageJson(_a) {
     try {
         var pkgJson = require(path + "/package.json");
         log("Found " + name + "/package.json");
-        var loadDir = pkgJson.scriptcraft_load_dir;
+        var loadDir = pkgJson.scriptcraft_load_dir ||
+            (pkgJson.smaPluginConfig &&
+                pkgJson.smaPluginConfig.scriptcraft_load_dir);
         if (loadDir) {
             log("package.json scriptcraft_load_dir: " + loadDir);
             log("Scanning " + name + "/" + loadDir);
@@ -106,8 +104,7 @@ function getLoadDirectoryFromPackageJson(_a) {
             }
         }
     }
-    catch (e) {
-    }
+    catch (e) { }
 }
 function checkDefaultPluginsDir(_a) {
     var path = _a.path, name = _a.name;

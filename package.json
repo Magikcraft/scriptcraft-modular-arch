@@ -1,0 +1,44 @@
+{
+    "name": "scriptcraft-modular-arch",
+    "version": "1.0.0",
+    "description": "Scriptcraft Modular Architecture via Docker",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Magikcraft/scriptcraft-modular-arch.git"
+    },
+    "keywords": [
+        "minecraft",
+        "scriptcraft",
+        "javascript"
+    ],
+    "author": "Josh Wulf <josh@magikcraft.io>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Magikcraft/scriptcraft-modular-arch/issues"
+    },
+    "homepage": "https://github.com/Magikcraft/scriptcraft-modular-arch#readme",
+    "husky": {
+        "hooks": {
+            "pre-commit": "tsc && git add . && lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{ts,js,json,css,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "devDependencies": {
+        "husky": "^1.3.1",
+        "lint-staged": "^8.1.5",
+        "prettier": "^1.16.4",
+        "typescript": "^3.3.4000"
+    }
+}
