@@ -5,4 +5,8 @@ ROOT=/server
 
 cd $ROOT || exit 1
 
-java -Xmx2048m -Xms2048m -jar paperclip.jar nogui
+if [ "x${SERVERMEM}" = "x" ]; then
+    SERVERMEM=2048
+fi
+
+java -Xmx${SERVERMEM}m -Xms${SERVERMEM}m -jar paperclip.jar nogui
