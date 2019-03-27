@@ -12,4 +12,4 @@ RUN mv ScriptCraft-3.4.0/src/main/js/ scriptcraft/ && \
     mv ./scriptcraft.jar plugins/scriptcraft.jar && \
     mv js/sma-bootstrap scriptcraft/plugins/
 
-ENTRYPOINT /server/entrypoint.sh
+ENTRYPOINT /server/start.sh
