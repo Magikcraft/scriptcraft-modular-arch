@@ -18,8 +18,13 @@ See license-scriptcraft.txt
 
     function fileExists(file) {
         if (file.isDirectory()) {
+
+            // console.log('File is directory: ' + file)  // @DEBUG
             return readModuleFromDirectory(file);
         } else {
+
+            // console.log('File is NOT directory: ' + file)  // @DEBUG
+
             return file;
         }
     }
@@ -30,14 +35,28 @@ See license-scriptcraft.txt
 
     function readModuleFromDirectory(dir) {
 
+        // console.log('Searching ' + dir)  // @DEBUG
         // look for a package.json file
         var pkgJsonFile = new File(dir, './package.json');
         if (pkgJsonFile.exists()) {
+            // console.log('Found package.json')  // @DEBUG
+
             var pkg = scload(pkgJsonFile);
-            var mainFile = new File(dir, pkg.main);
+            var mainFile;
+            if (pkg.main) {
+                mainFile = new File(dir, pkg.main);
+            } else {
+                mainFile = new File(dir, './index.js');
+            }
+            // console.log('package.json specifies '+ mainFile)  // @DEBUG
+
             if (mainFile.exists()) {
+                // console.log('Found ' + mainFile)  // @DEBUG
+
                 return mainFile;
             } else {
+                // console.log('NOT found  ' + mainFile)  // @DEBUG
+                console.log('Found ' + dir + '/package.json, but no entry point was specified or found for the module.')
                 return null;
             }
         } else {
@@ -86,6 +105,7 @@ See license-scriptcraft.txt
       3.2 if no package.json file exists then look for an index.js file in the directory
 
   ***/
+
     function resolveModuleToFile(moduleName, parentDir) {
         var file = new File(moduleName),
             i = 0,
@@ -95,18 +115,39 @@ See license-scriptcraft.txt
         }
         if (moduleName.match(/^[^\.\/]/)) {
             // it's a module named like so ... 'events' , 'net/http'
-            //
+
             for (; i < modulePaths.length; i++) {
-                resolvedFile = new File(modulePaths[i] + moduleName);
+                resolvedFile = new File(
+                    modulePaths[i] + moduleName
+                )
+
+                // console.log(resolvedFile)  // @DEBUG
                 if (resolvedFile.exists()) {
-                    return fileExists(resolvedFile);
+                    return fileExists(resolvedFile)
                 } else {
                     // try appending a .js to the end
-                    resolvedFile = new File(modulePaths[i] + moduleName + '.js');
+                    resolvedFile = new File(
+                        modulePaths[i] + moduleName + '.js'
+                    )
                     if (resolvedFile.exists()) {
-                        return resolvedFile;
+                        return resolvedFile
                     }
                 }
+            }
+
+            // Now search node_modules resolution paths
+            var nodeModulePaths = [
+                'node_modules/',
+                '../node_modules/',
+                '../../node_modules/',
+                '../../../node_modules/'
+            ]
+            for (i=0; i < nodeModulePaths.length; i++) {
+                resolvedFile = new File(parentDir, nodeModulePaths[i] + moduleName)
+
+                // console.log(resolvedFile)  // @DEBUG
+                if (resolvedFile.exists())
+                    return fileExists(resolvedFile)
             }
         } else {
             if ((file = new File(parentDir, moduleName)).exists()) {
