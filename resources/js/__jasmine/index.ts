@@ -18,6 +18,8 @@ export async function loadJasmine() {
         })
     })
 
+    let failures = 0
+
     env.addReporter({
         jasmineStarted: function(suiteInfo) {
             log('Running suite with ' + suiteInfo.totalSpecsDefined + ' tests')
@@ -35,14 +37,22 @@ export async function loadJasmine() {
             log('   ' + result.description + ': ' + result.status)
 
             for (var i = 0; i < result.failedExpectations.length; i++) {
+                failures++
                 log('Failure: ' + result.failedExpectations[i].message)
                 log(result.failedExpectations[i].stack)
             }
         },
-        suiteDone: function(result) {},
+        suiteDone: function(result) {
+            log(JSON.stringify(result))
+        },
 
         jasmineDone: function() {
-            console.log('Finished tests')
+            if (failures > 0) {
+                log('Some Jasmine tests have failed.')
+            } else {
+                log('All Jasmine tests succeeded.')
+            }
+            log('All tests are now complete.') // Do not change this string - it is a signal to exit the container
         },
     })
 

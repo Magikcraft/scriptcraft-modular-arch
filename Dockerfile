@@ -12,6 +12,6 @@ RUN mv ScriptCraft-3.4.0/src/main/js/ scriptcraft/ && \
     mv ./scriptcraft.jar plugins/scriptcraft.jar && \
     mv js/sma-bootstrap scriptcraft/plugins/ && \
     mkdir -p scriptcraft-plugins/__jasmine/* && \
-    mv js/jasmine/* scriptcraft-plugins/__jasmine/
+    mv js/__jasmine/* scriptcraft-plugins/__jasmine/
 
 ENTRYPOINT /_server_/start.sh

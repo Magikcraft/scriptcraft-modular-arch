@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var log = function (msg) { return console.log("[Test] " + msg); };
 function loadJasmine() {
     return __awaiter(this, void 0, void 0, function () {
-        var jasmine, env, jsm;
+        var jasmine, env, jsm, failures;
         return __generator(this, function (_a) {
             global.window = this;
             log('Loading Jasmine');
@@ -52,6 +52,7 @@ function loadJasmine() {
                     jsm.expect(true).toBe(true);
                 });
             });
+            failures = 0;
             env.addReporter({
                 jasmineStarted: function (suiteInfo) {
                     log('Running suite with ' + suiteInfo.totalSpecsDefined + ' tests');
@@ -65,13 +66,22 @@ function loadJasmine() {
                 specDone: function (result) {
                     log('   ' + result.description + ': ' + result.status);
                     for (var i = 0; i < result.failedExpectations.length; i++) {
+                        failures++;
                         log('Failure: ' + result.failedExpectations[i].message);
                         log(result.failedExpectations[i].stack);
                     }
                 },
-                suiteDone: function (result) { },
+                suiteDone: function (result) {
+                    log(JSON.stringify(result));
+                },
                 jasmineDone: function () {
-                    console.log('Finished tests');
+                    if (failures > 0) {
+                        log('Some Jasmine tests have failed.');
+                    }
+                    else {
+                        log('All Jasmine tests succeeded.');
+                    }
+                    log('All tests are now complete.'); // Do not change this string - it is a signal to exit the container
                 },
             });
             global.describe = jsm.describe;
