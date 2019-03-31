@@ -28,8 +28,20 @@ export class SMAPluginLoader {
             log('No SMA plugins found.')
             return
         }
+
+        // testLoader is populated in here
         const packages = this.getPackages(smaPlugins)
 
+        // Do not run autoloading code if we are in test mode
+        if (!testMode) {
+            await this.autoLoad(packages)
+        }
+
+        log('SMA plugin loading complete.')
+        return this.testLoaders
+    }
+
+    async autoLoad(packages) {
         const loadDirs = (await packages)
             .map(
                 p =>
@@ -39,7 +51,7 @@ export class SMAPluginLoader {
             .filter(t => t)
 
         // Map, rather than forEach, for synchronisation
-        loadDirs.map(d => {
+        return loadDirs.map(d => {
             try {
                 log(`Loading ${d}...`)
                 loader.autoloadAlphabetically(global, d)
@@ -49,9 +61,6 @@ export class SMAPluginLoader {
                 log(e)
             }
         })
-
-        log('SMA plugin loading complete.')
-        return this.testLoaders
     }
 
     async getPackages(smaPlugins: any) {
@@ -74,6 +83,9 @@ export class SMAPluginLoader {
         const len = smaPlugins.length
         for (let i = 0; i < len; i++) {
             let name
+            if (smaPlugins[i] === '__jasmine') {
+                continue
+            }
             // Check for package namespaces like @magikcraft or @scriptcraft
             const isNamespacedPackageDir = smaPlugins[i].indexOf('@') === 0
             if (isNamespacedPackageDir) {

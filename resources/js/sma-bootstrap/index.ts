@@ -43,6 +43,7 @@ pluginLoader.loadSMAPlugins(testMode).then(testLoaders => {
         const { loadJasmine } = require('../scriptcraft-plugins/__jasmine')
 
         loadJasmine().then(env => {
+            log('Loading test suites...')
             testLoaders.map(t => t && t.loadTests && t.loadTests())
             log('Waiting 5 seconds, then starting test suite...')
             setTimeout(() => env.execute(), 5000)

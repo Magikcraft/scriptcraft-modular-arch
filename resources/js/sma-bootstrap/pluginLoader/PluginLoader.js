@@ -52,8 +52,7 @@ var SMAPluginLoader = /** @class */ (function () {
     }
     SMAPluginLoader.prototype.loadSMAPlugins = function (testMode) {
         return __awaiter(this, void 0, void 0, function () {
-            var smaPlugins, packages, loadDirs;
-            var _this = this;
+            var smaPlugins, packages;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -65,7 +64,25 @@ var SMAPluginLoader = /** @class */ (function () {
                             return [2 /*return*/];
                         }
                         packages = this.getPackages(smaPlugins);
-                        return [4 /*yield*/, packages];
+                        if (!!testMode) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.autoLoad(packages)];
+                    case 1:
+                        _a.sent();
+                        _a.label = 2;
+                    case 2:
+                        log('SMA plugin loading complete.');
+                        return [2 /*return*/, this.testLoaders];
+                }
+            });
+        });
+    };
+    SMAPluginLoader.prototype.autoLoad = function (packages) {
+        return __awaiter(this, void 0, void 0, function () {
+            var loadDirs;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, packages];
                     case 1:
                         loadDirs = (_a.sent())
                             .map(function (p) {
@@ -74,19 +91,17 @@ var SMAPluginLoader = /** @class */ (function () {
                         })
                             .filter(function (t) { return t; });
                         // Map, rather than forEach, for synchronisation
-                        loadDirs.map(function (d) {
-                            try {
-                                log("Loading " + d + "...");
-                                loader.autoloadAlphabetically(global, d);
-                                log("Loaded " + d + ".");
-                            }
-                            catch (e) {
-                                log("Error encountered while loading " + d);
-                                log(e);
-                            }
-                        });
-                        log('SMA plugin loading complete.');
-                        return [2 /*return*/, this.testLoaders];
+                        return [2 /*return*/, loadDirs.map(function (d) {
+                                try {
+                                    log("Loading " + d + "...");
+                                    loader.autoloadAlphabetically(global, d);
+                                    log("Loaded " + d + ".");
+                                }
+                                catch (e) {
+                                    log("Error encountered while loading " + d);
+                                    log(e);
+                                }
+                            })];
                 }
             });
         });
@@ -117,6 +132,9 @@ var SMAPluginLoader = /** @class */ (function () {
                 len = smaPlugins.length;
                 for (i = 0; i < len; i++) {
                     name = void 0;
+                    if (smaPlugins[i] === '__jasmine') {
+                        continue;
+                    }
                     isNamespacedPackageDir = smaPlugins[i].indexOf('@') === 0;
                     if (isNamespacedPackageDir) {
                         namespace = smaPlugins[i];
