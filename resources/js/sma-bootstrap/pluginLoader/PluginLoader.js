@@ -132,7 +132,8 @@ var SMAPluginLoader = /** @class */ (function () {
                 len = smaPlugins.length;
                 for (i = 0; i < len; i++) {
                     name = void 0;
-                    if (smaPlugins[i] === '__jasmine') {
+                    if (smaPlugins[i] === '__jasmine' ||
+                        smaPlugins[i] === 'node_modules') {
                         continue;
                     }
                     isNamespacedPackageDir = smaPlugins[i].indexOf('@') === 0;

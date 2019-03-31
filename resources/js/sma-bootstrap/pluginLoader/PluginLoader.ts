@@ -83,7 +83,10 @@ export class SMAPluginLoader {
         const len = smaPlugins.length
         for (let i = 0; i < len; i++) {
             let name
-            if (smaPlugins[i] === '__jasmine') {
+            if (
+                smaPlugins[i] === '__jasmine' ||
+                smaPlugins[i] === 'node_modules'
+            ) {
                 continue
             }
             // Check for package namespaces like @magikcraft or @scriptcraft
