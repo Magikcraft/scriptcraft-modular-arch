@@ -1,6 +1,6 @@
 {
     "name": "scriptcraft-modular-arch",
-    "version": "1.0.0",
+    "version": "0.2.2",
     "description": "Scriptcraft Modular Architecture via Docker",
     "main": "index.js",
     "directories": {
