@@ -1,13 +1,13 @@
 #!/bin/bash
 docker run -it -p 25665:25565 \
-    --mount source=scriptcraft-worlds,target=/server/worlds \
-    --mount source=scriptcraft-cache,target=/server/cache \
-    --mount type=bind,src=$(pwd)/resources/js/sma-bootstrap,dst=/server/scriptcraft/plugins/sma-bootstrap \
-    --mount type=bind,src=$(pwd)/test/test-plugin,dst=/server/scriptcraft-plugins/test \
-    --mount type=bind,src=$(pwd)/test/test-plugin-2,dst=/server/scriptcraft-plugins/test-plugin-2 \
+    --mount source=scriptcraft-worlds,target=/_server_/worlds \
+    --mount source=scriptcraft-cache,target=/_server_/cache \
+    --mount type=bind,src=$(pwd)/resources/js/sma-bootstrap,dst=/_server_/scriptcraft/plugins/sma-bootstrap \
+    --mount type=bind,src=$(pwd)/test/test-plugin,dst=/_server_/scriptcraft-plugins/test \
+    --mount type=bind,src=$(pwd)/test/test-plugin-2,dst=/_server_/scriptcraft-plugins/test-plugin-2 \
     magikcraft/scriptcraft
 
 # The following mount demonstrates how to mount an SMA plugin in the image
-#    --mount type=bind,src=$(pwd)/test-plugin,dst=/server/scriptcraft-plugins/test \
+#    --mount type=bind,src=$(pwd)/test-plugin,dst=/_server_/scriptcraft-plugins/test \
 # The folllowing mount allows you to test changes to sma-bootstrap without rebuilding the image - for sma-bootstrap dev only
-#    --mount type=bind,src=$(pwd)/resources/js/sma-bootstrap,dst=/server/scriptcraft/plugins/sma-bootstrap \
+#    --mount type=bind,src=$(pwd)/resources/js/sma-bootstrap,dst=/_server_/scriptcraft/plugins/sma-bootstrap \

@@ -41,5 +41,8 @@
         "prettier": "^1.16.4",
         "typescript": "^3.3.4000"
     },
-    "private": true
+    "private": true,
+    "dependencies": {
+        "@types/jasmine": "^3.3.12"
+    }
 }

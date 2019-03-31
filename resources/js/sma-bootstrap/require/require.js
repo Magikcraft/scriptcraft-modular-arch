@@ -9,6 +9,10 @@ See license-scriptcraft.txt
 
 (function (rootDir, modulePaths, hooks, evaluate) {
 
+    var debug = function(message) {
+        return // console.log(message)
+    }
+
     // make the old require available as __require
     global.__require = require;
 
@@ -19,11 +23,11 @@ See license-scriptcraft.txt
     function fileExists(file) {
         if (file.isDirectory()) {
 
-            // console.log('File is directory: ' + file)  // @DEBUG
+            debug('File is directory: ' + file)  // @DEBUG
             return readModuleFromDirectory(file);
         } else {
 
-            // console.log('File is NOT directory: ' + file)  // @DEBUG
+            // debug('File is NOT directory: ' + file)  // @DEBUG
 
             return file;
         }
@@ -35,11 +39,11 @@ See license-scriptcraft.txt
 
     function readModuleFromDirectory(dir) {
 
-        // console.log('Searching ' + dir)  // @DEBUG
+        debug('Searching directory ' + dir)  // @DEBUG
         // look for a package.json file
         var pkgJsonFile = new File(dir, './package.json');
         if (pkgJsonFile.exists()) {
-            // console.log('Found package.json')  // @DEBUG
+            debug('Found package.json')  // @DEBUG
 
             var pkg = scload(pkgJsonFile);
             var mainFile;
@@ -48,15 +52,15 @@ See license-scriptcraft.txt
             } else {
                 mainFile = new File(dir, './index.js');
             }
-            // console.log('package.json specifies '+ mainFile)  // @DEBUG
+            debug('package.json specifies '+ mainFile)  // @DEBUG
 
             if (mainFile.exists()) {
-                // console.log('Found ' + mainFile)  // @DEBUG
+                debug('Found ' + mainFile)  // @DEBUG
 
                 return mainFile;
             } else {
-                // console.log('NOT found  ' + mainFile)  // @DEBUG
-                console.log('Found ' + dir + '/package.json, but no entry point was specified or found for the module.')
+                debug('NOT found  ' + mainFile)  // @DEBUG
+                debug('Found ' + dir + '/package.json, but no entry point was specified or found for the module.')
                 return null;
             }
         } else {
@@ -65,6 +69,7 @@ See license-scriptcraft.txt
             if (indexJsFile.exists()) {
                 return indexJsFile;
             } else {
+                debug(dir + './index.js does not exist') // @DEBUG
                 return null;
             }
         }
@@ -107,6 +112,7 @@ See license-scriptcraft.txt
   ***/
 
     function resolveModuleToFile(moduleName, parentDir) {
+        debug('Resolving ' + moduleName) // @DEBUG
         var file = new File(moduleName),
             i = 0,
             resolvedFile;
@@ -115,20 +121,30 @@ See license-scriptcraft.txt
         }
         if (moduleName.match(/^[^\.\/]/)) {
             // it's a module named like so ... 'events' , 'net/http'
-
+            debug('Searching for absolute module') // @DEBUG
             for (; i < modulePaths.length; i++) {
                 resolvedFile = new File(
                     modulePaths[i] + moduleName
                 )
 
-                // console.log(resolvedFile)  // @DEBUG
                 if (resolvedFile.exists()) {
+                    debug('Resolved file: ' + resolvedFile)  // @DEBUG
+
                     return fileExists(resolvedFile)
                 } else {
                     // try appending a .js to the end
                     resolvedFile = new File(
                         modulePaths[i] + moduleName + '.js'
                     )
+                    if (resolvedFile.exists()) {
+                        return resolvedFile
+                    }
+                    // try appending a .js to the end
+                     resolvedFile = new File(
+                        modulePaths[i] + moduleName + '/index.js'
+                    )
+                    debug('Resolved file: ' + resolvedFile)  // @DEBUG
+
                     if (resolvedFile.exists()) {
                         return resolvedFile
                     }
@@ -145,16 +161,20 @@ See license-scriptcraft.txt
             for (i=0; i < nodeModulePaths.length; i++) {
                 resolvedFile = new File(parentDir, nodeModulePaths[i] + moduleName)
 
-                // console.log(resolvedFile)  // @DEBUG
                 if (resolvedFile.exists())
+                    debug('Resolved:' + resolvedFile)  // @DEBUG
                     return fileExists(resolvedFile)
             }
         } else {
+            debug('Searching for relative module ' + moduleName + ' - looking in: ' + parentDir) // @DEBUG
+            debug(parentDir + moduleName + ' exists: ' + (new File(parentDir, moduleName)).exists())
             if ((file = new File(parentDir, moduleName)).exists()) {
                 return fileExists(file);
             } else if ((file = new File(parentDir, moduleName + '.js')).exists()) { // try .js extension
                 return file;
             } else if ((file = new File(parentDir, moduleName + '.json')).exists()) { // try .json extension
+                return file;
+            } else if ((file = new File(parentDir, moduleName + '/index.js')).exists()) { // try index.js
                 return file;
             }
         }
@@ -177,38 +197,42 @@ See license-scriptcraft.txt
                 options.cache = true;
             }
         }
-
+        debug('Requiring ' + parentFile + path) // @DEBUG
         file = resolveModuleToFile(path, parentFile);
+        debug(file) // @DEBUG
         if (!file) {
 
             var errMsg = '' + _format('require() failed to find matching file for module \'%s\'' +
                 'in any of the following locations \n%s <-- ## working dir ##\n', [path, parentFile.canonicalPath]);
-            if (!(('' + path).match(/^\./))) {
-                errMsg = errMsg + modulePaths.join('\n');
-            }
-            var find = _require(parentFile, 'find').exports;
-            var allJS = [];
-            for (var i = 0; i < modulePaths.length; i++) {
-                var js = find(modulePaths[i]);
-                for (var j = 0; j < js.length; j++) {
-                    if (js[j].match(/\.js$/)) {
-                        allJS.push(js[j].replace(modulePaths[i], ''));
-                    }
-                }
-            }
-            var pathL = path.toLowerCase();
-            var candidates = [];
-            for (i = 0; i < allJS.length; i++) {
-                var filenameparts = allJS[i];
-                var candidate = filenameparts.replace(/\.js/, '');
-                var lastpart = candidate.toLowerCase();
-                if (pathL.indexOf(lastpart) > -1 || lastpart.indexOf(pathL) > -1) {
-                    candidates.push(candidate);
-                }
-            }
-            if (candidates.length > 0) {
-                errMsg += '\nBut found module/s named: ' + candidates.join(',') + ' - is this what you meant?';
-            }
+            /**
+             * This find search is helpful, but very slow with node_modules
+             */
+            // if (!(('' + path).match(/^\./))) {
+            //     errMsg = errMsg + modulePaths.join('\n');
+            // }
+            // var find = _require(parentFile, 'find').exports;
+            // var allJS = [];
+            // for (var i = 0; i < modulePaths.length; i++) {
+            //     var js = find(modulePaths[i]);
+            //     for (var j = 0; j < js.length; j++) {
+            //         if (js[j].match(/\.js$/)) {
+            //             allJS.push(js[j].replace(modulePaths[i], ''));
+            //         }
+            //     }
+            // }
+            // var pathL = path.toLowerCase();
+            // var candidates = [];
+            // for (i = 0; i < allJS.length; i++) {
+            //     var filenameparts = allJS[i];
+            //     var candidate = filenameparts.replace(/\.js/, '');
+            //     var lastpart = candidate.toLowerCase();
+            //     if (pathL.indexOf(lastpart) > -1 || lastpart.indexOf(pathL) > -1) {
+            //         candidates.push(candidate);
+            //     }
+            // }
+            // if (candidates.length > 0) {
+            //     errMsg += '\nBut found module/s named: ' + candidates.join(',') + ' - is this what you meant?';
+            // }
             throw new Error(errMsg);
         }
         canonizedFilename = _canonize(file);
