@@ -10,7 +10,8 @@ See license-scriptcraft.txt
 (function (rootDir, modulePaths, hooks, evaluate) {
 
     var debug = function(message) {
-        return // console.log(message)
+        return
+        // console.log(message)
     }
 
     // make the old require available as __require
@@ -119,6 +120,26 @@ See license-scriptcraft.txt
         if (file.exists()) {
             return fileExists(file);
         }
+        if (moduleName.indexOf('/') === 0) {
+            // it's an absolute file path. We use this to include commando
+            debug('Searching for absolute path')
+            resolvedFile = new File(moduleName)
+            if (resolvedFile.exists()) {
+                debug('Resolved file: ' + resolvedFile)  // @DEBUG
+                return fileExists(resolvedFile)
+            }
+            resolvedFile = new File(moduleName + '.js')
+            if (resolvedFile.exists()) {
+                debug('Resolved file: ' + resolvedFile)  // @DEBUG
+                return fileExists(resolvedFile)
+            }
+            resolvedFile = new File(moduleName + '/index.js')
+            if (resolvedFile.exists()) {
+                debug('Resolved file: ' + resolvedFile)  // @DEBUG
+                return fileExists(resolvedFile)
+            }
+            return null;
+        }
         if (moduleName.match(/^[^\.\/]/)) {
             // it's a module named like so ... 'events' , 'net/http'
             debug('Searching for absolute module') // @DEBUG
@@ -160,7 +181,7 @@ See license-scriptcraft.txt
             ]
             for (i=0; i < nodeModulePaths.length; i++) {
                 resolvedFile = new File(parentDir, nodeModulePaths[i] + moduleName)
-
+                debug('Searching ' + resolvedFile)
                 if (resolvedFile.exists())
                     debug('Resolved:' + resolvedFile)  // @DEBUG
                     return fileExists(resolvedFile)
@@ -197,9 +218,10 @@ See license-scriptcraft.txt
                 options.cache = true;
             }
         }
-        debug('Requiring ' + parentFile + path) // @DEBUG
+        debug('Requiring: parentFile: ' + parentFile) // @DEBUG
+        debug('Requiring: path: ' + path) // @DEBUG
         file = resolveModuleToFile(path, parentFile);
-        debug(file) // @DEBUG
+        debug('Resolved file: ' + file) // @DEBUG
         if (!file) {
 
             var errMsg = '' + _format('require() failed to find matching file for module \'%s\'' +
