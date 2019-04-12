@@ -165,7 +165,7 @@ var SMAPluginLoader = /** @class */ (function () {
                 (pkgJson.smaPluginConfig &&
                     pkgJson.smaPluginConfig.scriptcraft_load_dir);
             if (loadDir) {
-                log("package.json scriptcraft_load_dir: " + loadDir);
+                log(name + " package.json scriptcraft_load_dir: " + loadDir);
                 log("Scanning " + name + "/" + loadDir);
                 var file = new File(path + "/" + loadDir);
                 if (file.isDirectory()) {
