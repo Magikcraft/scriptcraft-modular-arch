@@ -10,8 +10,9 @@ See license-scriptcraft.txt
 (function (rootDir, modulePaths, hooks, evaluate) {
 
     var debug = function(message) {
-        return
-        // console.log(message)
+        if (global.__requireDebug) {
+            console.log(message)
+        }
     }
 
     // make the old require available as __require
@@ -338,7 +339,7 @@ See license-scriptcraft.txt
     }
 
     function _requireClosure(parentFile) {
-        var _boundRequire = function requireBoundToParent(path, options) {
+        var _boundRequire = function requireBoundToParentSMA(path, options) {
             var module = _require(parentFile, path, options);
             return module.exports;
         };
