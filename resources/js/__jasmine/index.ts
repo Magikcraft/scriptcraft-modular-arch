@@ -26,7 +26,8 @@ export async function loadJasmine() {
         },
 
         suiteStarted: function(suite) {
-            log(suite.description + '...')
+            log(' ')
+            log('\u001b[35m' + suite.description + '...\u001b[0m')
         },
 
         specStarted: function(result) {
@@ -34,12 +35,20 @@ export async function loadJasmine() {
         },
 
         specDone: function(result) {
-            log('   ' + result.description + ': ' + result.status)
+            const status =
+                result.status === 'passed'
+                    ? '\u001b[32mpassed\u001b[0m'
+                    : '\u001b[31mfailed\u001b[0m'
+            log('   ' + result.description + ': ' + status)
 
             for (var i = 0; i < result.failedExpectations.length; i++) {
                 failures++
-                log('    Failure: ' + result.failedExpectations[i].message)
-                log('    ' + result.failedExpectations[i].stack)
+                log(
+                    '\u001b[31m      Failure: ' +
+                        result.failedExpectations[i].message +
+                        '\u001b[0m'
+                )
+                // log('      ' + result.failedExpectations[i].stack)
             }
         },
         suiteDone: function(result) {
@@ -48,9 +57,9 @@ export async function loadJasmine() {
 
         jasmineDone: function() {
             if (failures > 0) {
-                log('Some Jasmine tests have failed.')
+                log(`${failures} Jasmine tests have failed.`)
             } else {
-                log('All Jasmine tests succeeded.')
+                log('All Jasmine tests succeeded!')
             }
             log('All tests are now complete.') // Do not change this string - it is a signal to exit the container
         },
