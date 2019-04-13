@@ -61,18 +61,18 @@ function loadJasmine() {
                     log(suite.description + '...');
                 },
                 specStarted: function (result) {
-                    log('   ' + result.description);
+                    // log('   ' + result.description)
                 },
                 specDone: function (result) {
                     log('   ' + result.description + ': ' + result.status);
                     for (var i = 0; i < result.failedExpectations.length; i++) {
                         failures++;
-                        log('Failure: ' + result.failedExpectations[i].message);
-                        log(result.failedExpectations[i].stack);
+                        log('    Failure: ' + result.failedExpectations[i].message);
+                        log('    ' + result.failedExpectations[i].stack);
                     }
                 },
                 suiteDone: function (result) {
-                    log(JSON.stringify(result));
+                    // log(JSON.stringify(result))
                 },
                 jasmineDone: function () {
                     if (failures > 0) {
