@@ -1,5 +1,6 @@
 const smaPath = 'scriptcraft-plugins'
 const testMode = java.lang.System.getenv('TEST_MODE') === 'true'
+const requireDebug = java.lang.System.getenv('DEBUG_REQUIRE') === 'true'
 
 /**
  * Cannot use require('magikcraft/*') until we patch require.
@@ -20,6 +21,7 @@ if (testMode) {
  */
 require('./polyfills').sync() // tslint:disable-line
 
+global.__requireDebug = requireDebug
 /**
  * Replace the global require with our custom implementation.
  *

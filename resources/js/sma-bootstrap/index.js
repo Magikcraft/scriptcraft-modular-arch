@@ -1,6 +1,7 @@
 "use strict";
 var smaPath = 'scriptcraft-plugins';
 var testMode = java.lang.System.getenv('TEST_MODE') === 'true';
+var requireDebug = java.lang.System.getenv('DEBUG_REQUIRE') === 'true';
 /**
  * Cannot use require('magikcraft/*') until we patch require.
  */
@@ -16,8 +17,8 @@ if (testMode) {
 /**
  * Load ES6 polyfills globally.
  */
-require('./polyfills').sync() // tslint:disable-line
-;
+require('./polyfills').sync(); // tslint:disable-line
+global.__requireDebug = requireDebug;
 require = require('./require/patch-require').patch();
 /**
  * We use a path relative to the root,

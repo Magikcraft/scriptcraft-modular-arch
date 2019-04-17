@@ -24,13 +24,10 @@ See license-scriptcraft.txt
 
     function fileExists(file) {
         if (file.isDirectory()) {
-
             debug('File is directory: ' + file)  // @DEBUG
             return readModuleFromDirectory(file);
         } else {
-
-            // debug('File is NOT directory: ' + file)  // @DEBUG
-
+            debug('File is NOT directory: ' + file)  // @DEBUG
             return file;
         }
     }
@@ -175,17 +172,20 @@ See license-scriptcraft.txt
 
             // Now search node_modules resolution paths
             var nodeModulePaths = [
-                'node_modules/',
-                '../node_modules/',
-                '../../node_modules/',
-                '../../../node_modules/'
+                '/node_modules/',
+                '/../node_modules/',
+                '/../../node_modules/',
+                '/../../../node_modules/'
             ]
+            debug('Searching node_module paths')
             for (i=0; i < nodeModulePaths.length; i++) {
-                resolvedFile = new File(parentDir, nodeModulePaths[i] + moduleName)
-                debug('Searching ' + resolvedFile)
-                if (resolvedFile.exists())
+                debug('Using path ' + nodeModulePaths[i]);
+                resolvedFile = new File(parentDir + nodeModulePaths[i] + moduleName);
+                debug('Searching ' + resolvedFile);
+                if (resolvedFile.exists()) {
                     debug('Resolved:' + resolvedFile)  // @DEBUG
-                    return fileExists(resolvedFile)
+                    return fileExists(resolvedFile);
+                }
             }
         } else {
             debug('Searching for relative module ' + moduleName + ' - looking in: ' + parentDir) // @DEBUG
