@@ -115,6 +115,14 @@ See license-scriptcraft.txt
         var file = new File(moduleName),
             i = 0,
             resolvedFile;
+
+        if (moduleName.indexOf('.') === 0) {
+            // This is a relative path - we will make it absolute
+            // This resolves paths like `../${dirname}
+            // Without it, Scriptcraft can only do `../${dirname}/index
+            // Will cause requiring hidden files to fail
+            file = new File(parentDir, moduleName)
+        }
         if (file.exists()) {
             return fileExists(file);
         }
