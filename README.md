@@ -6,6 +6,10 @@ This provides isolation of custom plugin files, allowing plugins to live in thei
 
 It also means that you can update the Scriptcraft version without impacting your own code.
 
+## Scriptcraft Version
+
+This uses [Scriptcraft 3.4.0](https://github.com/walterhiggins/ScriptCraft/releases/tag/3.4.0) patched to fix issue [#410](https://github.com/walterhiggins/ScriptCraft/issues/410).
+
 ## To Run
 
 ```bash
@@ -66,11 +70,11 @@ We developed the Scriptcraft Modular Architecture to allow us to easily integrat
 
 3. The bootstrap:
 
-* Replaces the standard scriptcraft implementation of `require` at run-time. This custom require adds the `scriptcraft-plugins` to the require resolution search paths.
+-   Replaces the standard scriptcraft implementation of `require` at run-time. This custom require adds the `scriptcraft-plugins` to the require resolution search paths.
 
-* Scans each SMA plugin for a `package.json` file. If found, checks for a `scriptcraft_load_dir` key. If present, the contents of the directory specified in this key are autoloaded.
+-   Scans each SMA plugin for a `package.json` file. If found, checks for a `scriptcraft_load_dir` key. If present, the contents of the directory specified in this key are autoloaded.
 
-* If no `package.json` is found in an SMA plugin, or if it does not specify a `scriptcraft_load_dir`, then the bootstrap looks for a `plugin` folder in the SMA plugin, and loads everything in there if it is present.
+-   If no `package.json` is found in an SMA plugin, or if it does not specify a `scriptcraft_load_dir`, then the bootstrap looks for a `plugin` folder in the SMA plugin, and loads everything in there if it is present.
 
 ## Module Resolution
 
@@ -92,16 +96,16 @@ scriptcraft/../scriptcraft-plugins/magikcraft/fs
 
 The Scriptcraft Modular Architecture environment includes a number of ES6 polyfills. Our code at Magikcraft is written in TypeScript, and we missed a number of modern features while coding, so we added polyfills to the runtime to support the following:
 
-* `Array.prototype.find`
-* `Array.prototype.from`
-* `Array.prototype.includes`
-* `EventEmitter`
-* `Object.assign`
-* `Promise`
-* `String.prototype.includes`
-* `String.prototype.repeat`
-* `String.prototype.padStart`
-* `String.prototype.padEnd`
+-   `Array.prototype.find`
+-   `Array.prototype.from`
+-   `Array.prototype.includes`
+-   `EventEmitter`
+-   `Object.assign`
+-   `Promise`
+-   `String.prototype.includes`
+-   `String.prototype.repeat`
+-   `String.prototype.padStart`
+-   `String.prototype.padEnd`
 
 ## Making a SMA Plugin
 
