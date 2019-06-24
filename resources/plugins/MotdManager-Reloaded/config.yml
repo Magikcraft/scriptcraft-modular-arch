@@ -1,0 +1,21 @@
+#==================#
+#   Basic Config   #
+#==================#
+# sending MOTD list
+MotdList:
+- '§!§2Magikcraft.io §r§e[%ver]'
+- '§oLearn to code JavaScript in Minecraft!'
+
+# if use show fake max players count feature, change this to numeric
+FakeMaxPlayer: disable
+
+#==================#
+#   Debug Config   #
+#==================#
+Debug: false
+
+#==================#
+#   DO NOT TOUCH   #
+#==================#
+# Do not touch this option! It is a check if you are running the recent configuration version
+ConfigVersion: 1

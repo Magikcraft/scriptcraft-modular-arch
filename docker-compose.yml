@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+  minecraft:
+    image: magikcraft/scriptcraft
+    container_name: minecraft
+    ports:
+      - "25565:25565"
+      - "8086:8086"
+    environment:
+      - MINECRAFT_EULA_ACCEPTED=true
+    volumes:
+      - ./cache:/_server_/cache
+      # To load SMA plugins
+      # Create a directory called scriptcraft-plugins and npm install any SMA plugins there
+      # And uncomment the following line
+ #     - ./scriptcraft-plugins:/_server_/scriptcraft-plugins
