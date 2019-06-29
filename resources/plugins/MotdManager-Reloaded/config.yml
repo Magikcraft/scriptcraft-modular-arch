@@ -3,7 +3,7 @@
 #==================#
 # sending MOTD list
 MotdList:
-- '§!§2Magikcraft.io §r§e[%ver] Code | Play'
+- '§!§2Magikcraft.io §r§e[%ver] §r§2Code | Play'
 
 # if use show fake max players count feature, change this to numeric
 FakeMaxPlayer: disable
