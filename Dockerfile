@@ -6,7 +6,8 @@ EXPOSE 25565
 WORKDIR /_server_
 COPY ./resources ./
 
-RUN unzip ScriptCraft-3.4.0-patched.zip
+RUN unzip ScriptCraft-3.4.0-patched.zip && \
+    rm -rf __MACOSX/
 RUN mv ScriptCraft-3.4.0/src/main/js/ scriptcraft/ && \
     rm -rf ScriptCraft* && \
     mv ./scriptcraft.jar plugins/scriptcraft.jar && \
