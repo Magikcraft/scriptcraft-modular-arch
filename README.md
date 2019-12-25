@@ -10,6 +10,10 @@ It also means that you can update the Scriptcraft version without impacting your
 
 This uses [Scriptcraft 3.4.0](https://github.com/walterhiggins/ScriptCraft/releases/tag/3.4.0) patched to fix issue [#410](https://github.com/walterhiggins/ScriptCraft/issues/410).
 
+## Versions
+
+Paperclip build #29.
+
 ## To Run
 
 ```bash
