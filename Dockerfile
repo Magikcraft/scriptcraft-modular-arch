@@ -7,7 +7,7 @@ WORKDIR /_server_
 COPY ./resources ./
 
 RUN unzip ScriptCraft-3.4.0-patched.zip
-RUN mv src/main/js/ scriptcraft/ && \
+RUN mv main/js/ scriptcraft/ && \
     rm -rf ScriptCraft* && \
     mv ./Scriptcraft-ME-3.0.jar plugins/scriptcraft.jar && \
     mv js/sma-bootstrap scriptcraft/plugins/ && \

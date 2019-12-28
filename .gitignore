@@ -2,3 +2,4 @@ node_modules
 .vscode
 cache
 ScriptCraft-3.4.0-src
+.DS_Store
