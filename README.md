@@ -38,6 +38,19 @@ Make sure that you put your minecraft username in there. So, for example, if you
 op Rob123
 ```
 
+## Included plugins
+
+-   [Minecraft Prometheus Exporter](https://github.com/sladkoff/minecraft-prometheus-exporter)
+-   Minecraft REST console
+-   Holographic Displays
+-   Essentials
+-   Motd Manager Reloaded
+-   Multiverse Core
+-   ProtocolLib
+-   World Edit
+-   Boss Bar
+-   Durable Map
+
 ## Run with Modular Plugins
 
 See the `run.sh` file for an example of how to mount modular scriptcraft plugins in the Docker image.
