@@ -14,5 +14,6 @@ services:
             - ./cache:/_server_/cache
             # To load SMA plugins
             # Create a directory called scriptcraft-plugins and npm install any SMA plugins there
+            # with npm install --prefix ./scriptcraft-plugins <package-name>
             # And uncomment the following line
     #     - ./scriptcraft-plugins:/_server_/scriptcraft-plugins
