@@ -115,6 +115,6 @@ The Scriptcraft Modular Architecture environment includes a number of ES6 polyfi
 
 ## Making a SMA Plugin
 
-The easiest way to make an SMA Plugin is using the [Scriptcraft-SMA Yeoman generator](https://www.npmjs.com/package/generator-scriptcraft-sma).
+The easiest way to make an SMA Plugin is using the [Scriptcraft-SMA Yeoman generator](https://www.npmjs.com/package/generator-sma-plugin).
 
 For an example of a Scriptcraft SMA plugin, refer to [MCT1](https://github.com/Magikcraft/mct1).
