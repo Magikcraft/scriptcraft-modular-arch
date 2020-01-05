@@ -1,5 +1,8 @@
 version: '2'
 
+volumes:
+    worlds:
+
 services:
     minecraft:
         image: magikcraft/scriptcraft:1.15
@@ -12,6 +15,7 @@ services:
             - MINECRAFT_EULA_ACCEPTED=true
         volumes:
             - ./cache:/_server_/cache
+            - worlds:/_server_/worlds
             # To load SMA plugins
             # Create a directory called scriptcraft-plugins and npm install any SMA plugins there
             # with npm install --prefix ./scriptcraft-plugins <package-name>
