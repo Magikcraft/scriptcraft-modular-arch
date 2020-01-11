@@ -9,7 +9,7 @@ COPY ./resources ./
 RUN unzip ScriptCraft-3.4.0-patched.zip
 RUN mv main/js/ scriptcraft/ && \
     rm -rf ScriptCraft*
-RUN mv ./Scriptcraft-ME-3.0.1.jar plugins/scriptcraft-3.0.1.jar
+RUN mv ./Scriptcraft-ME-3.0.2.jar plugins/scriptcraft-3.0.2.jar
 RUN mv js/sma-bootstrap scriptcraft/plugins/ 
 RUN mkdir -p scriptcraft-plugins/__jasmine/* 
 RUN mv js/__jasmine/* scriptcraft-plugins/__jasmine/
