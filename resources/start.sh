@@ -17,4 +17,4 @@ fi
 echo "Minecraft EULA accepted."
 echo "Starting with ${SERVERMEM} MB of RAM"
 
-java -Xmx${SERVERMEM}m -Xms${SERVERMEM}m -jar paperclip.jar nogui
+java -Xmx${SERVERMEM}m -Xms${SERVERMEM}m -cp paperclip.jar:h2.jar io.papermc.paperclip.Paperclip
