@@ -1,5 +1,5 @@
 #!/bin/bash
-MINECRAFT_TAG=1.15
+MINECRAFT_TAG=1.15.2
 docker run -it -p 25665:25565 \
     --mount source=scriptcraft-worlds,target=/_server_/worlds \
     --mount source=scriptcraft-cache,target=/_server_/cache \

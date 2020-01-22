@@ -5,7 +5,7 @@ volumes:
 
 services:
     minecraft:
-        image: magikcraft/scriptcraft:1.15
+        image: magikcraft/scriptcraft:1.15.2
         container_name: minecraft
         ports:
             - '25565:25565'
