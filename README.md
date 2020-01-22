@@ -14,7 +14,7 @@ Uses the [Scriptcraft Multi-engine plugin](https://github.com/Magikcraft/scriptc
 
 ## Versions
 
--   Paperclip [build #60](https://papermc.io/downloads).
+-   Paperclip [build #65](https://papermc.io/downloads).
 -   H2 1.4.200
 
 ## To Run
