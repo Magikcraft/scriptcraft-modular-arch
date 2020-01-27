@@ -30,6 +30,7 @@ From 1.15.2, the base image is [oracle/graalvm-ce:19.3.1-java8](https://hub.dock
 
 -   Paperclip [build #71](https://papermc.io/downloads).
 -   H2 1.4.200
+-   [CamundaPlugin](https://github.com/jwulf/camunda-minecraft-plugin)
 
 ## To Run
 
