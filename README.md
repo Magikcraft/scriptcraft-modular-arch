@@ -8,7 +8,7 @@ It also means that you can update the Scriptcraft version without impacting your
 
 ## Scriptcraft Version
 
-This uses [Scriptcraft 3.4.0](https://github.com/Magikcraft/ScriptCraft/tree/3.4.0-patched) patched to fix issue [#410](https://github.com/walterhiggins/ScriptCraft/issues/410).
+This uses [Scriptcraft 3.4.0](https://github.com/Magikcraft/ScriptCraft/tree/3.4.0-patched) patched to fix issue [#410](https://github.com/walterhiggins/ScriptCraft/issues/410). See the [README-Magikcraft.md](https://github.com/Magikcraft/ScriptCraft/blob/3.4.0-patched/README-Magikcraft.md) file for instructions on building a patched version.
 
 Uses the [Scriptcraft Multi-engine plugin](https://github.com/Magikcraft/scriptcraft-multi-engine).
 
@@ -18,7 +18,7 @@ From 1.15.2, the base image is [oracle/graalvm-ce:19.3.1-java8](https://hub.dock
 
 ## Versions
 
--   Paperclip [build #65](https://papermc.io/downloads).
+-   Paperclip [build #71](https://papermc.io/downloads).
 -   H2 1.4.200
 
 ## To Run
