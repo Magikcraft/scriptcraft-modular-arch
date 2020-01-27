@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/bash
 # shellcheck shell=dash
 
 ROOT=/_server_
