@@ -1,10 +1,20 @@
 # Scriptcraft Modular Architecture
 
+[![](https://images.microbadger.com/badges/version/magikcraft/scriptcraft:1.15.2.svg)](https://hub.docker.com/repository/docker/magikcraft/scriptcraft/ 'Paperclip 1.15.2 and GraalVM')
+
 Scriptcraft Modular Architecture (SMA) adds support for modular plugins that live outside the `scriptcraft` root directory.
 
 This provides isolation of custom plugin files, allowing plugins to live in their own repositories and be loaded via configuration - for example by mounting them in a docker container.
 
 It also means that you can update the Scriptcraft version without impacting your own code.
+
+## Docker image
+
+A [built Docker image](https://hub.docker.com/repository/docker/magikcraft/scriptcraft) is available from Docker Hub:
+
+```
+docker pull magikcraft/scriptcraft
+```
 
 ## Scriptcraft Version
 
