@@ -56,6 +56,10 @@ var SMAPluginLoader = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (__disableSMAPluginLoading) {
+                            log('SMA Plugin loading disabled');
+                            return [2 /*return*/];
+                        }
                         this.testMode = testMode;
                         log("Searching for SMA plugins in " + this.smaPluginsRootDir);
                         smaPlugins = this.smaPluginsRootDir.list(this.filterHiddenFiles);

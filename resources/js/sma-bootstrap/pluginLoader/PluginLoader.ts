@@ -1,3 +1,4 @@
+declare const __disableSMAPluginLoading: boolean
 import { TestLoader } from './TestLoader'
 const File = java.io.File
 
@@ -20,6 +21,10 @@ export class SMAPluginLoader {
     absolutePluginPath = p => `${this.smaPluginsRootDirName}/${p}`
 
     async loadSMAPlugins(testMode) {
+        if (__disableSMAPluginLoading) {
+            log('SMA Plugin loading disabled')
+            return
+        }
         this.testMode = testMode
         log(`Searching for SMA plugins in ${this.smaPluginsRootDir}`)
 
