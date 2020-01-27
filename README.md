@@ -12,6 +12,10 @@ This uses [Scriptcraft 3.4.0](https://github.com/Magikcraft/ScriptCraft/tree/3.4
 
 Uses the [Scriptcraft Multi-engine plugin](https://github.com/Magikcraft/scriptcraft-multi-engine).
 
+## Base image
+
+From 1.15.2, the base image is [oracle/graalvm-ce:19.3.1-java8](https://hub.docker.com/r/oracle/graalvm-ce/tags), to use the new Polyglot GraalVM.
+
 ## Versions
 
 -   Paperclip [build #65](https://papermc.io/downloads).
