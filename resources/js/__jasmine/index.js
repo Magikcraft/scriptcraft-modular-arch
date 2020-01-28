@@ -81,13 +81,17 @@ function loadJasmine() {
                     // log(JSON.stringify(result))
                 },
                 jasmineDone: function () {
+                    var success = 0;
                     if (failures > 0) {
                         log(failures + " Jasmine tests have failed.");
+                        success = 1;
                     }
                     else {
                         log('All Jasmine tests succeeded!');
                     }
                     log('All tests are now complete.'); // Do not change this string - it is a signal to exit the container
+                    var system = Java.type('java.lang.System');
+                    system.exit(success);
                 },
             });
             global.describe = jsm.describe;

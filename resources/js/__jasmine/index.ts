@@ -56,12 +56,16 @@ export async function loadJasmine() {
         },
 
         jasmineDone: function() {
+            let success = 0
             if (failures > 0) {
                 log(`${failures} Jasmine tests have failed.`)
+                success = 1
             } else {
                 log('All Jasmine tests succeeded!')
             }
             log('All tests are now complete.') // Do not change this string - it is a signal to exit the container
+            const system = Java.type('java.lang.System')
+            system.exit(success)
         },
     })
 
