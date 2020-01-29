@@ -23,7 +23,7 @@ jobs:
                   CI: true
             - name: Build project # This would actually build your project, using zip for an example artifact
               run: |
-                  zip sma-patch resources/js
+                  zip -r sma-patch resources/js
             - name: Create Release
               id: create_release
               uses: actions/create-release@v1
